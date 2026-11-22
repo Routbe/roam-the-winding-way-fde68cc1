@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UsernameRouteImport } from './routes/$username'
+import { Route as R17df389a1c714eb6ba529d0ae7262a9fDottxtRouteImport } from './routes/17df389a1c714eb6ba529d0ae7262a9f[.]txt'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ActRouteImport } from './routes/act'
@@ -496,6 +497,12 @@ const UsernameRoute = UsernameRouteImport.update({
   path: '/$username',
   getParentRoute: () => rootRouteImport,
 } as any)
+const R17df389a1c714eb6ba529d0ae7262a9fDottxtRoute =
+  R17df389a1c714eb6ba529d0ae7262a9fDottxtRouteImport.update({
+    id: '/17df389a1c714eb6ba529d0ae7262a9f.txt',
+    path: '/17df389a1c714eb6ba529d0ae7262a9f.txt',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
@@ -3007,6 +3014,7 @@ const ApiWalletRenderLogoBgFileRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$username': typeof UsernameRoute
+  '/17df389a1c714eb6ba529d0ae7262a9f.txt': typeof R17df389a1c714eb6ba529d0ae7262a9fDottxtRoute
   '/about': typeof AboutRouteWithChildren
   '/act': typeof ActRoute
   '/ai-manifest.json': typeof AiManifestDotjsonRoute
@@ -3484,6 +3492,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$username': typeof UsernameRoute
+  '/17df389a1c714eb6ba529d0ae7262a9f.txt': typeof R17df389a1c714eb6ba529d0ae7262a9fDottxtRoute
   '/act': typeof ActRoute
   '/ai-manifest.json': typeof AiManifestDotjsonRoute
   '/api': typeof ApiRouteWithChildren
@@ -3945,6 +3954,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$username': typeof UsernameRoute
+  '/17df389a1c714eb6ba529d0ae7262a9f.txt': typeof R17df389a1c714eb6ba529d0ae7262a9fDottxtRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRouteWithChildren
   '/act': typeof ActRoute
@@ -4425,6 +4435,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$username'
+    | '/17df389a1c714eb6ba529d0ae7262a9f.txt'
     | '/about'
     | '/act'
     | '/ai-manifest.json'
@@ -4902,6 +4913,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$username'
+    | '/17df389a1c714eb6ba529d0ae7262a9f.txt'
     | '/act'
     | '/ai-manifest.json'
     | '/api'
@@ -5362,6 +5374,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$username'
+    | '/17df389a1c714eb6ba529d0ae7262a9f.txt'
     | '/_authenticated'
     | '/about'
     | '/act'
@@ -5841,6 +5854,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   UsernameRoute: typeof UsernameRoute
+  R17df389a1c714eb6ba529d0ae7262a9fDottxtRoute: typeof R17df389a1c714eb6ba529d0ae7262a9fDottxtRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AboutRoute: typeof AboutRouteWithChildren
   ActRoute: typeof ActRoute
@@ -6125,6 +6139,13 @@ declare module '@tanstack/react-router' {
       path: '/$username'
       fullPath: '/$username'
       preLoaderRoute: typeof UsernameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/17df389a1c714eb6ba529d0ae7262a9f.txt': {
+      id: '/17df389a1c714eb6ba529d0ae7262a9f.txt'
+      path: '/17df389a1c714eb6ba529d0ae7262a9f.txt'
+      fullPath: '/17df389a1c714eb6ba529d0ae7262a9f.txt'
+      preLoaderRoute: typeof R17df389a1c714eb6ba529d0ae7262a9fDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -10087,6 +10108,8 @@ const ApiPublicIntegrationsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   UsernameRoute: UsernameRoute,
+  R17df389a1c714eb6ba529d0ae7262a9fDottxtRoute:
+    R17df389a1c714eb6ba529d0ae7262a9fDottxtRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutRoute: AboutRouteWithChildren,
   ActRoute: ActRoute,

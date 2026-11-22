@@ -1,4 +1,5 @@
 import { sql } from "@/lib/neon";
+import { notifyRootProfilePublished } from "@/lib/indexnow/indexnow.server";
 import type { AliasProfileInput } from "@/lib/alias-profile.server";
 import type { StudioProfileInput } from "@/lib/studio-profile.server";
 import type { ProfileQrStyle } from "@/lib/profile-qr";
@@ -151,6 +152,8 @@ export async function publishProfileDraft(
     )) as Row[];
     const row = rows[0];
     if (!row) throw new Error("publish_failed");
+    // Root profiles only; aliases (/u/) are never sent to search engines.
+    if (space === "verified") notifyRootProfilePublished(userId);
     return rowMeta(row);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
