@@ -1,4 +1,5 @@
 import { sql } from "@/lib/neon";
+import { notifyWorkspacePublished } from "@/lib/indexnow/indexnow.server";
 import type { DraftMeta } from "./profile-drafts.server";
 import { readHub } from "./workspace-hub";
 import { WORKSPACE_LOGO_MAX, WORKSPACE_LOGO_PATTERNS, seedWorkspaceStudio, type WorkspaceStudioPayload } from "./workspace-studio";
@@ -152,6 +153,7 @@ export async function publishWorkspaceDraft(workspaceId: string, expectedRevisio
     const row = rows[0];
     if (!row) throw new Error("draft_conflict");
     if (Number(row["written"]) !== 1) throw new Error("publish_failed");
+    notifyWorkspacePublished(workspaceId);
     return meta(row);
   } catch (error) {
     pendingMigration(error);

@@ -589,3 +589,9 @@
 - [x] Perspagina 4 talen gecontroleerd; hreflang/canonical/og:url nu absolute https://rout.be-adressen + test
 - [x] Hybride URL-structuur vastgelegd; nl/fr/de/en staan in gereserveerde handles (code + db/0302)
 - [x] "Tekst voor European Alternatives" stond niet op de lijst; niet meer toevoegen
+
+## IndexNow (opdracht eigenaar 2026-11-22 18:25)
+- [x] Sleutelbestand https://rout.be/17df389a1c714eb6ba529d0ae7262a9f.txt (alleen de sleutel, text/plain; charset=utf-8)
+- [x] Niet-blokkerende ping (3 s timeout) bij publiceren van geverifieerd root-profiel en publieke workspace (/w/<slug>); landingspagina's via de dagelijkse taak (last_updated vandaag/gisteren)
+- [x] Alleen productie (INDEXNOW_KEY + PUBLIC_ORIGIN https://rout.be + VERCEL_ENV production); nooit /u/, /admin, /api, /auth + Vitest
+- [ ] Eerste echte ping op productie controleren (Vercel-logboek "[indexnow]" of Bing Webmaster Tools) — wacht op: deploy van main door eigenaar

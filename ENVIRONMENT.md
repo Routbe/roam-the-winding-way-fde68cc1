@@ -286,3 +286,6 @@ Storage names are exactly those in "File storage (Scaleway)" above (`SCALEWAY_DE
 - **Other hosts:** `NITRO_PRESET=<preset> bun run build` for any Nitro preset.
 - **Runtime secrets on the app server:** `DATABASE_URL` (rout_app login; TLS is always enforced), `CRON_SECRET`, plus the service keys listed above. `MIGRATION_URL` belongs only where the admin scripts run, never on the app server.
 - **Order of a release:** apply reviewed migrations first (`bun scripts/migration-rollout.ts <file> --after=<previous> --apply` with `MIGRATION_URL`), check with `bun scripts/migration-history-check.ts`, `bun scripts/schema-snapshot.ts --check` and `bun scripts/security-definer-check.ts`, then deploy code whose `CODE_SCHEMA_LEVEL` does not exceed the live schema.
+
+## IndexNow (added 2026-11-22)
+- `INDEXNOW_KEY` — Vercel **Production** only. Must equal `INDEXNOW_PUBLIC_KEY` in `src/lib/indexnow/indexnow.ts`, which is also served at `https://rout.be/<key>.txt`. The key is public by protocol. Pings run only when this key matches, `PUBLIC_ORIGIN` is `https://rout.be` and `VERCEL_ENV` is `production` (or unset); preview, localhost and the admin host never ping. Rotating the key means changing the constant, the route file name and this variable together.
