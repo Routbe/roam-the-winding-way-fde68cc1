@@ -595,3 +595,7 @@
 - [x] Niet-blokkerende ping (3 s timeout) bij publiceren van geverifieerd root-profiel en publieke workspace (/w/<slug>); landingspagina's via de dagelijkse taak (last_updated vandaag/gisteren)
 - [x] Alleen productie (INDEXNOW_KEY + PUBLIC_ORIGIN https://rout.be + VERCEL_ENV production); nooit /u/, /admin, /api, /auth + Vitest
 - [ ] Eerste echte ping op productie controleren (Vercel-logboek "[indexnow]" of Bing Webmaster Tools) — wacht op: deploy van main door eigenaar
+
+## Bing Webmaster-meldingen (opdracht eigenaar 2026-11-22 18:54)
+- [ ] Ruwe HTML (zonder JS) van /, /nl/pers, /fr/presse, /de/presse, /en/press, profielen en workspaces: niet-lege title, description, content-language, lang, één h1 en JSON-LD @graph — opgenomen als eerste fase in het SEO-plan, wacht op: GO eigenaar
+- [ ] Centrale bewaker titel (20–60 tekens, " | ROUT") en description (120–155) + Vitest-linter over alle routes; /support/account/security-titel inkorten — opgenomen in het SEO-plan, wacht op: GO eigenaar
