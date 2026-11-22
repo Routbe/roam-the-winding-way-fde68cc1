@@ -1,0 +1,61 @@
+{
+  "source": "github: Routbe/roam-the-winding-way-598bacf0 (ROUT — Sovereign Digital Identity OS, AGPL-3.0)",
+  "capabilities": [
+    {
+      "capability": "application code",
+      "source": "repository src/, public/, scripts/, wasm/, formal/, db/",
+      "outcome": "copied into project; dependencies installed; build OK; homepage verified rendering in browser",
+      "status": "verified",
+      "next_action": null
+    },
+    {
+      "capability": "database schema (281 tables)",
+      "source": "db/ migration files, Neon Postgres via OMNI_DATABASE_URL",
+      "outcome": "preserved as external Neon Postgres; migration files copied; not applied anywhere yet",
+      "status": "pending",
+      "next_action": "user provides OMNI_DATABASE_URL (Neon connection string) via the secure secret form; then apply db/ migrations"
+    },
+    {
+      "capability": "existing records",
+      "source": "none in repository",
+      "outcome": "no record exports attached",
+      "status": "pending",
+      "next_action": "user exports application tables and users (emails + original user IDs) as CSV/JSON from the Neon dashboard"
+    },
+    {
+      "capability": "authentication (better-auth, passkey-only)",
+      "source": "src/ better-auth configuration",
+      "outcome": "preserved as the app's own auth system; runs but reports 'no runtime database configured' until DB is connected; needs BETTER_AUTH_SECRET",
+      "status": "pending",
+      "next_action": "connect database and set BETTER_AUTH_SECRET via the secure secret form"
+    },
+    {
+      "capability": "file storage (Scaleway S3)",
+      "source": "SCALEWAY_* env vars",
+      "outcome": "provider preserved; credentials missing",
+      "status": "pending",
+      "next_action": "user provides Scaleway keys via the secure secret form"
+    },
+    {
+      "capability": "payments (Stripe)",
+      "source": "@stripe/stripe-js integration",
+      "outcome": "provider preserved; credentials missing",
+      "status": "pending",
+      "next_action": "user provides Stripe keys via the secure secret form"
+    },
+    {
+      "capability": "Omni worker (separate service)",
+      "source": "worker/ directory",
+      "outcome": "code copied; it is a standalone service, not part of this app's runtime",
+      "status": "pending",
+      "next_action": "decide later whether to host the worker separately"
+    },
+    {
+      "capability": "third-party API keys (Steam, Last.fm, ROUT OAuth)",
+      "source": "env vars in ENVIRONMENT.md",
+      "outcome": "integrations preserved; keys missing",
+      "status": "pending",
+      "next_action": "user provides keys via the secure secret form when those features are needed"
+    }
+  ]
+}
