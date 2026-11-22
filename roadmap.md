@@ -599,3 +599,6 @@
 ## Bing Webmaster-meldingen (opdracht eigenaar 2026-11-22 18:54)
 - [ ] Ruwe HTML (zonder JS) van /, /nl/pers, /fr/presse, /de/presse, /en/press, profielen en workspaces: niet-lege title, description, content-language, lang, één h1 en JSON-LD @graph — opgenomen als eerste fase in het SEO-plan, wacht op: GO eigenaar
 - [ ] Centrale bewaker titel (20–60 tekens, " | ROUT") en description (120–155) + Vitest-linter over alle routes; /support/account/security-titel inkorten — opgenomen in het SEO-plan, wacht op: GO eigenaar
+- [ ] Officieel profieladres zonder @ (rout.be/jdelplanche); /@jdelplanche verwijst door naar /jdelplanche (keuze eigenaar 2026-11-22)
+- [ ] /tour en de andere door Bing gemelde pagina's: titel ≤ 60, description 120–155, h1 en JSON-LD in de ruwe HTML
+- [ ] Standaard profieladres zonder @ voor nieuwe leden en leden zonder keuze; wie @ koos houdt dat (keuze eigenaar 2026-11-22)

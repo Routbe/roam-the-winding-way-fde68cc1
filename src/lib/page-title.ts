@@ -1,5 +1,6 @@
 /**
- * One title convention for every ROUT page: `PageName | ROUT - Sovereign Digital Identity OS`.
+ * One title convention for every ROUT page: `PageName | ROUT`, at most 60 characters
+ * (owner rule; the full brand name stays in og:site_name, the home title and the knowledge graph).
  *
  * Route heads keep writing their own short titles ("Webhooks | ROUT",
  * "Security — ROUT Developer Console", "ROUT support"); `brandTitle` turns
@@ -8,8 +9,11 @@
  * belongs to their identity, not to ROUT.
  */
 
+import { fitDescription, fitPlainTitle, fitTitle, SITE_SUFFIX } from "@/lib/seo/metadata-guard";
+
 export const BRAND = "ROUT - Sovereign Digital Identity OS";
 export const TITLE_SEPARATOR = " | ";
+const LEGACY_SUFFIX = `${TITLE_SEPARATOR}${BRAND}`;
 
 /** Product areas that stay visible in the page name, e.g. "Security · Developer Console". */
 const AREAS: Record<string, string> = {
@@ -31,8 +35,8 @@ function capitalise(text: string): string {
 export function pageNameFromTitle(raw: string): string {
   let name = raw.replace(/\s+/g, " ").trim();
   if (!name) return "";
-  if (name === BRAND || name.endsWith(`${TITLE_SEPARATOR}${BRAND}`)) {
-    return name === BRAND ? "" : name.slice(0, -(TITLE_SEPARATOR.length + BRAND.length)).trim();
+  if (name === BRAND || name.endsWith(LEGACY_SUFFIX)) {
+    return name === BRAND ? "" : name.slice(0, -LEGACY_SUFFIX.length).trim();
   }
   if (/^ROUT$/i.test(name)) return "";
 
@@ -58,11 +62,13 @@ export function pageNameFromTitle(raw: string): string {
   return name;
 }
 
-/** `PageName | ROUT - Sovereign Digital Identity OS`, or just the brand for the home page. */
+/** `PageName | ROUT` (≤ 60 characters, shortened naturally), or the full brand for a bare title. */
 export function brandTitle(raw: string | null | undefined): string {
   const name = pageNameFromTitle(raw ?? "");
-  return name ? `${name}${TITLE_SEPARATOR}${BRAND}` : BRAND;
+  return name ? fitTitle(name, SITE_SUFFIX) : BRAND;
 }
+
+const DESCRIPTION_META = new Set(["description", "og:description", "twitter:description"]);
 
 type Tag = { tag: string; attrs?: Record<string, unknown>; children?: string };
 
@@ -75,20 +81,22 @@ export function isMemberPage(tags: readonly Tag[]): boolean {
 }
 
 /**
- * Applies the title convention to the router's head tags and keeps ROUT's own
- * knowledge graph off member pages (a member's custom domain is not rout.be).
+ * Applies the title and description limits to the router's head tags and keeps ROUT's own
+ * knowledge graph off member pages (a member's custom domain is not rout.be). Member pages keep
+ * their own title wording; only its length is enforced.
  */
 export function brandHeadTags<T extends Tag>(tags: readonly T[]): T[] {
-  if (isMemberPage(tags)) {
-    return tags.filter((t) => !(t.tag === "script" && t.attrs?.["id"] === KNOWLEDGE_GRAPH_SCRIPT_ID));
-  }
-  return tags.map((t) => {
-    if (t.tag === "title" && typeof t.children === "string") return { ...t, children: brandTitle(t.children) };
+  const member = isMemberPage(tags);
+  const title = member ? fitPlainTitle : brandTitle;
+  const source = member ? tags.filter((t) => !(t.tag === "script" && t.attrs?.["id"] === KNOWLEDGE_GRAPH_SCRIPT_ID)) : tags;
+  return source.map((t) => {
+    if (t.tag === "title" && typeof t.children === "string") return { ...t, children: title(t.children) };
     if (t.tag === "meta") {
       const key = (t.attrs?.["property"] ?? t.attrs?.["name"]) as string | undefined;
       const content = t.attrs?.["content"];
-      if (key && TITLE_META.has(key) && typeof content === "string") {
-        return { ...t, attrs: { ...t.attrs, content: brandTitle(content) } };
+      if (key && typeof content === "string") {
+        if (TITLE_META.has(key)) return { ...t, attrs: { ...t.attrs, content: title(content) } };
+        if (DESCRIPTION_META.has(key)) return { ...t, attrs: { ...t.attrs, content: fitDescription(content) } };
       }
     }
     return t;

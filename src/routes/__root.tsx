@@ -28,6 +28,7 @@ import { ThemeProvider } from "@/hooks/useTheme";
 import { BOOT_SCRIPT, DEFAULT_UI_PREFERENCES, isInternalInterface } from "@/lib/internal-interface-theme";
 import { readRequestUiPreferences } from "@/lib/ui-preferences-request";
 import { readRequestLocale } from "@/lib/locale-request";
+import { pathLocale } from "@/lib/path-locale";
 import { UiPreferencesSeed, useUiPreferences } from "@/hooks/useUiPreferences";
 import { UiPreferenceAccountSync } from "@/components/settings/UiPreferenceAccountSync";
 import { KeyHaptics } from "@/components/settings/KeyHaptics";
@@ -128,11 +129,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     const d = modeDecision(appMode(), location.pathname);
     if (d.kind === "notFound") throw notFound();
     if (d.kind === "redirect") throw redirect({ href: d.to });
-    const [uiPreferences, locale] = await Promise.all([readRequestUiPreferences(), readRequestLocale()]);
-    return { uiPreferences, locale };
+    const [uiPreferences, negotiated] = await Promise.all([readRequestUiPreferences(), readRequestLocale()]);
+    // /nl|fr|de|en/… pages carry their language in the URL; crawlers send no cookie or Accept-Language.
+    return { uiPreferences, locale: pathLocale(location.pathname) ?? negotiated };
   },
-  head: () => ({
+  // The document's language as an HTTP header too, for crawlers that read headers before markup.
+  headers: ({ match }) => ({ "Content-Language": match.context.locale }),
+  head: ({ match }) => ({
     meta: [
+      { httpEquiv: "content-language", content: match.context.locale },
       ...(isAdminMode() ? [{ name: "robots", content: "noindex, nofollow" }] : []),
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1.0, viewport-fit=cover" },
@@ -223,6 +228,7 @@ function RootComponent() {
   useLiquidGlassRuntime();
   const { queryClient } = Route.useRouteContext();
   const serverLocale = Route.useRouteContext({ select: context => context.locale });
+  const pinnedLocale = useRouterState({ select: state => pathLocale(state.location.pathname) ?? undefined });
   const router = useRouter();
 
   useEffect(() => {
@@ -238,7 +244,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <I18nProvider serverLocale={serverLocale}>
+        <I18nProvider serverLocale={serverLocale} initialLocale={pinnedLocale}>
           <TooltipProvider>
             <Toaster />
             <Sonner />
