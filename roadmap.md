@@ -575,14 +575,17 @@
 - [x] Build + volledige Vitest-suite na opruimtaak-wijziging
 - [x] Controle 7-dagen-vernietiging bewijsstukken (verslag aan eigenaar)
 - [ ] Bewijsstukken: rij na vernietiging anonimiseren (requester_user_id, public_name, sha256, subject_nullifier, decided_by leegmaken) + per-bestand sleutel voor crypto-shredding — wacht op: GO eigenaar voor migratie 0302
-- [ ] Voorbeeld draait op Neon ep-restless-haze (schema 0298, 22 leden), niet op productie ep-autumn-salad (0301): organisatieverificatie werkt hier niet — wacht op: keuze eigenaar (productie-string of 0299–0301 op deze branch na GO)
+- [x] Voorbeeld draait nu op productie ep-autumn-salad (keuze eigenaar 2026-11-22: productie-string)
 - [x] SECURITY_ARCHITECTURE.md → docs/security/SECURITY_ARCHITECTURE.md (stand per laag + fases B1–B8, alleen plan); B1 wacht op GO
 - [ ] Stap 4 traject 2 (grondwet, architectuur, tokens.json, openapi.yaml, schema-concept "0301" — krijgt nu een nieuw nummer (0302+), /admin/devices) — wacht op afronding stap 2–3; 0301-concept overlapt met bestaande 0272 (herstel v4) en 0274 (multi-device host keys): eerst herontwerpen
 
 ## Import in nieuw Lovable-project (opdracht eigenaar 2026-11-22 17:48)
 - [x] Code 1-op-1 geïmporteerd uit GitHub (main)
-- [ ] Neon koppelen met eigenaarsrechten (connector + DATABASE_URL) — wacht op: eigenaar vult verbinding in
-- [ ] Build + volledige Vitest-suite opnieuw in dit project
-- [ ] Controle 7-dagen-vernietiging bewijsstukken: record + bestand gewist, geanonimiseerde purged_at-auditregel
-- [ ] Perspagina 4 talen nalopen tegen de opdracht (samenvatting, feitenblad, Waarom ROUT?, press@rout.be)
-- [ ] Hybride URL-structuur nalopen: nl/fr/de/en gereserveerde handles, geen taalprefix voor profielen/workspaces
+- [x] Neon gekoppeld (productie ep-autumn-salad) + DATABASE_URL gezet; health meldt "operational"
+- [ ] Neon-beheerkoppeling met eigenaarsrol (neondb_owner) — gekozen koppeling is rout_app; wacht op: eigenaar voegt koppeling met eigenaarsstring toe
+- [x] Build OK + volledige Vitest-suite: 625 bestanden geslaagd, 4.016 tests geslaagd, 0 mislukt
+- [x] Controle 7-dagen-vernietiging: bytes alleen in Neon (ciphertext), gewist bij besluit/intrekking/verloop (sweep); anonimisering van de rij + anonieme evidence_purged-regel zit in db/0302, maar 0302 staat nog niet op Neon
+- [ ] db/0302 op productie toepassen — wacht op: koppeling met eigenaarsrol (rout_app mag geen migraties)
+- [x] Perspagina 4 talen gecontroleerd; hreflang/canonical/og:url nu absolute https://rout.be-adressen + test
+- [x] Hybride URL-structuur vastgelegd; nl/fr/de/en staan in gereserveerde handles (code + db/0302)
+- [x] "Tekst voor European Alternatives" stond niet op de lijst; niet meer toevoegen
