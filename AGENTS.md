@@ -143,9 +143,6 @@ use the editor.
 - createServerFn exports need requireAuth/requireDeveloperAccess/optionalAuth or an entry in PUBLIC_SERVER_FNS (src/test/server-fn-auth-guard.test.ts). Why: route gates only hide UI.
 
 
-## IndexNow
-- IndexNow pings go only through src/lib/indexnow/ (pure filter + env gate in indexnow.ts, fire-and-forget sender in indexnow.server.ts): triggered by root-profile and workspace publishes and by the daily job for landing pages whose last_updated is today/yesterday; never /u/, /admin, /api, /auth or another host, and only in production. Why: search-engine pings must never slow a request or expose alias profiles (Zero Public Correlation).
-
 <!-- AGENT-MEMORY:BEGIN -->
 ## One-file migration rollout
 - A GO for a single migration is applied with scripts/migration-rollout.ts --apply: the exact db/ file text travels as one parameter, runs only if its SHA-256 equals the file checksum and its predecessor is recorded, and is recorded with the definer guard in the same transaction (dry run: src/test/migration-rollout.test.ts). Why: a retyped or hand-split file must never diverge from db/.

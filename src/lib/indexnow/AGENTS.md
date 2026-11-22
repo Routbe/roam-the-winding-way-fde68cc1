@@ -1,0 +1,2 @@
+## IndexNow
+- IndexNow pings go only through src/lib/indexnow/ (pure filter + env gate in indexnow.ts, fire-and-forget sender in indexnow.server.ts): triggered by root-profile and workspace publishes and by the daily job for landing pages whose last_updated is today/yesterday; never /u/, /admin, /api, /auth or another host, and only in production. Why: search-engine pings must never slow a request or expose alias profiles (Zero Public Correlation).
