@@ -578,3 +578,11 @@
 - [ ] Voorbeeld draait op Neon ep-restless-haze (schema 0298, 22 leden), niet op productie ep-autumn-salad (0301): organisatieverificatie werkt hier niet — wacht op: keuze eigenaar (productie-string of 0299–0301 op deze branch na GO)
 - [x] SECURITY_ARCHITECTURE.md → docs/security/SECURITY_ARCHITECTURE.md (stand per laag + fases B1–B8, alleen plan); B1 wacht op GO
 - [ ] Stap 4 traject 2 (grondwet, architectuur, tokens.json, openapi.yaml, schema-concept "0301" — krijgt nu een nieuw nummer (0302+), /admin/devices) — wacht op afronding stap 2–3; 0301-concept overlapt met bestaande 0272 (herstel v4) en 0274 (multi-device host keys): eerst herontwerpen
+
+## Import in nieuw Lovable-project (opdracht eigenaar 2026-11-22 17:48)
+- [x] Code 1-op-1 geïmporteerd uit GitHub (main)
+- [ ] Neon koppelen met eigenaarsrechten (connector + DATABASE_URL) — wacht op: eigenaar vult verbinding in
+- [ ] Build + volledige Vitest-suite opnieuw in dit project
+- [ ] Controle 7-dagen-vernietiging bewijsstukken: record + bestand gewist, geanonimiseerde purged_at-auditregel
+- [ ] Perspagina 4 talen nalopen tegen de opdracht (samenvatting, feitenblad, Waarom ROUT?, press@rout.be)
+- [ ] Hybride URL-structuur nalopen: nl/fr/de/en gereserveerde handles, geen taalprefix voor profielen/workspaces
