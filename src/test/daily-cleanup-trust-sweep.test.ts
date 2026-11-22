@@ -15,6 +15,7 @@ vi.mock("@/lib/altcha.server", () => ({ purgeExpiredAltcha: ok }));
 vi.mock("@/lib/security-code.server", () => ({ purgeExpiredSecurityCodes: ok }));
 vi.mock("@/lib/subdomain-claims.server", () => ({ runDnsPropagationCheck: ok }));
 vi.mock("@/lib/questions.server", () => ({ qaMaintenance: ok }));
+vi.mock("@/lib/indexnow/indexnow.server", () => ({ pingRecentLandingPages: ok }));
 
 const SECRET = "cron-secret-0123456789abcdef";
 
