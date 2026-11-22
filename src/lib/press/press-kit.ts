@@ -3,6 +3,8 @@
  * Facts are limited to what the code base or the owner verifies; keep claims about hosting out
  * until the hosting location is confirmed.
  */
+import { SITE_ORIGIN } from "@/lib/site";
+
 export type PressLocale = "nl" | "fr" | "de" | "en";
 
 export const PRESS_EMAIL = "press@rout.be";
@@ -187,7 +189,9 @@ export const pressLanguageName = (l: PressLocale) => LANG_NAMES[l];
 /** Head tags: self canonical, reciprocal hreflang (x-default → English) and a press ContactPoint. */
 export function pressHead(locale: PressLocale) {
   const c = PRESS_COPY[locale];
-  const path = PRESS_PATHS[locale];
+  // Search engines ignore relative hreflang/canonical URLs, so every link is absolute.
+  const abs = (l: PressLocale) => `${SITE_ORIGIN}${PRESS_PATHS[l]}`;
+  const url = abs(locale);
   return {
     meta: [
       { title: c.title },
@@ -195,13 +199,13 @@ export function pressHead(locale: PressLocale) {
       { property: "og:title", content: c.title },
       { property: "og:description", content: c.description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: path },
+      { property: "og:url", content: url },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "canonical", href: path },
-      ...PRESS_LOCALES.map((l) => ({ rel: "alternate", hrefLang: l, href: PRESS_PATHS[l] })),
-      { rel: "alternate", hrefLang: "x-default", href: PRESS_PATHS.en },
+      { rel: "canonical", href: url },
+      ...PRESS_LOCALES.map((l) => ({ rel: "alternate", hrefLang: l, href: abs(l) })),
+      { rel: "alternate", hrefLang: "x-default", href: abs("en") },
     ],
     scripts: [
       {
