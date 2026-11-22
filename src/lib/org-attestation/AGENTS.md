@@ -1,0 +1,8 @@
+## Organisation assurance (db/0300)
+- Every trust write goes through the rout_trust_* / rout_admin_trust_* SECURITY DEFINER functions in the caller's db context; the database decides manager and 2FA-admin rights. Why: route gates only hide UI.
+- Register numbers, work e-mails and codes reach Neon only as keyed BLAKE3/HMAC values under the identity pepper; review documents only as REV1 AES-256-GCM under ROUT_EVIDENCE_KEK, bound to the review id. Why: no plaintext identifiers or documents in the database.
+- DNS proofs count only with a DNSSEC-validated (AD) answer, and a lookup error is never reported as an absent record. Why: a resolver outage must not lapse a seal.
+- A mandate declaration ticket is single-use in the database (unique statement_digest for level 'declared') and valid 300 s (+5 s skew) on the database clock; the in-memory NonceLedger is only a fast path. Why: serverless isolates do not share memory, so replay protection must not depend on one.
+- Evidence uploads are wiped in a finally block on every path, and PDFs with active content (scripts, launch/submit/import actions, embedded files, rich media, XFA) are refused at sniffing. Why: plaintext must never outlive the call, and the admin viewer must not receive executable documents.
+
+- Evidence files are REV2 blobs with a per-file data key wrapped under ROUT_EVIDENCE_KEK (outside Neon, rotation via ROUT_EVIDENCE_KEK_PREVIOUS); a closed review row keeps no personal fields and evidence_purged has no actor (db/0302). Why: Neon history copies are shredded only by destroying the old KEK, otherwise they age out with Neon's retention.
