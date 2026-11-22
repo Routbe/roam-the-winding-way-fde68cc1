@@ -3,17 +3,27 @@ import { BRAND, brandHeadTags, brandTitle, KNOWLEDGE_GRAPH_SCRIPT_ID } from "./p
 import { routKnowledgeGraph } from "./knowledge-graph";
 
 describe("brandTitle", () => {
-  it("formats as PageName | ROUT - Sovereign Digital Identity OS", () => {
-    expect(brandTitle("Webhooks | ROUT")).toBe("Webhooks | ROUT - Sovereign Digital Identity OS");
-    expect(brandTitle("Data deletion instructions — ROUT")).toBe("Data deletion instructions | ROUT - Sovereign Digital Identity OS");
+  it("formats as PageName | ROUT", () => {
+    expect(brandTitle("Webhooks | ROUT")).toBe("Webhooks | ROUT");
+    expect(brandTitle("Data deletion instructions — ROUT")).toBe("Data deletion instructions | ROUT");
   });
   it("keeps the product area in the page name", () => {
-    expect(brandTitle("Security — ROUT Developer Console")).toBe("Security · Developer Console | ROUT - Sovereign Digital Identity OS");
-    expect(brandTitle("Operations | ROUT beheer")).toBe("Operations · Beheer | ROUT - Sovereign Digital Identity OS");
+    expect(brandTitle("Security — ROUT Developer Console")).toBe("Security · Developer Console | ROUT");
+    expect(brandTitle("Operations | ROUT beheer")).toBe("Operations · Beheer | ROUT");
   });
   it("strips a leading brand", () => {
-    expect(brandTitle("ROUT support")).toBe("Support | ROUT - Sovereign Digital Identity OS");
-    expect(brandTitle("ROUT — Member area")).toBe("Member area | ROUT - Sovereign Digital Identity OS");
+    expect(brandTitle("ROUT support")).toBe("Support | ROUT");
+    expect(brandTitle("ROUT — Member area")).toBe("Member area | ROUT");
+  });
+  it("migrates the old long brand suffix", () => {
+    expect(brandTitle("Manifesto | ROUT - Sovereign Digital Identity OS")).toBe("Manifesto | ROUT");
+  });
+  it("never exceeds 60 characters and shortens at a separator first", () => {
+    const out = brandTitle("Hoe beveilig ik mijn ROUT-account? Passkeys, herstel en sleutels uitgelegd");
+    expect(out.length).toBeLessThanOrEqual(60);
+    expect(out.endsWith(" | ROUT")).toBe(true);
+    expect(brandTitle("Developers — Login met ROUT, verificaties en API")).toBe("Developers — Login met ROUT, verificaties en API | ROUT");
+    expect(brandTitle("Privacy policy — Your data stays yours, always and everywhere in Europe")).toBe("Privacy policy — Your data stays yours | ROUT");
   });
   it("uses just the brand for the home page and is idempotent", () => {
     expect(brandTitle("ROUT")).toBe(BRAND);
@@ -31,8 +41,8 @@ describe("brandHeadTags", () => {
       { tag: "meta", attrs: { property: "og:title", content: "Manifesto | ROUT" } },
       graph,
     ]);
-    expect(out[0]?.children).toBe("Manifesto | ROUT - Sovereign Digital Identity OS");
-    expect(out[1]?.attrs?.["content"]).toBe("Manifesto | ROUT - Sovereign Digital Identity OS");
+    expect(out[0]?.children).toBe("Manifesto | ROUT");
+    expect(out[1]?.attrs?.["content"]).toBe("Manifesto | ROUT");
     expect(out).toContain(graph);
   });
   it("leaves member pages untouched and drops ROUT's graph there", () => {
